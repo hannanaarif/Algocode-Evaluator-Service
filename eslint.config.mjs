@@ -22,7 +22,7 @@ export default tseslint.config({
     },
     rules:{
       "semi": ["error", "always"],
-      "no-console":"error",
+      //"no-console":"error",
        quotes:["error","single",{allowTemplateLiterals:true}],
        'simple-import-sort/imports': 'error', // Enable import sorting rule
        'simple-import-sort/exports': 'error', // Enable export sorting rule
