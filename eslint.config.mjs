@@ -26,5 +26,6 @@ export default tseslint.config({
        quotes:["error","single",{allowTemplateLiterals:true}],
        'simple-import-sort/imports': 'error', // Enable import sorting rule
        'simple-import-sort/exports': 'error', // Enable export sorting rule
+       //"@typescript-eslint/require-await": "off",
       },
   });
