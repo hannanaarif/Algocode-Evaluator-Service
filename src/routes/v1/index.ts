@@ -1,9 +1,13 @@
 import express from 'express';
 
 import { pingcheck } from '../../controllers/pingController';
+import submissionRouter from './submissionRoutes';
 
-const v1router=express.Router();
+const v1Router=express.Router();
 
-v1router.get('/ping',pingcheck);
+console.log('v1Router');
+v1Router.use('/submission',submissionRouter);
 
-export default v1router;
+v1Router.get('/ping',pingcheck);
+
+export default v1Router;
