@@ -29,19 +29,20 @@ async function runPython(code:string,inputTestCase:string){
         rawLogBuffer.push(chunk);
     });
 
-    loggerStream.on('end',()=>{
-        const completeBuffer = Buffer.concat(rawLogBuffer);
-        //console.log('completeBuffer',completeBuffer);
-        const decodedStream=decodeDockerStream(completeBuffer);
-        console.log(decodedStream);
-        console.log(decodedStream.stdout);
+    await new Promise((res)=>{
+        loggerStream.on('end',()=>{
+            const completeBuffer = Buffer.concat(rawLogBuffer);
+            //console.log('completeBuffer',completeBuffer);
+            const decodedStream=decodeDockerStream(completeBuffer);
+            console.log(decodedStream);
+            console.log(decodedStream.stdout);
+            res(decodedStream);
+        });
     });
 
+    await pythonDockerContainer.remove();
 
-
-  
     return pythonDockerContainer;
-
 
 };
 
