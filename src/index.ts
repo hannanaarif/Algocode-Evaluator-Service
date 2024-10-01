@@ -2,8 +2,10 @@ import express, { RequestHandler } from 'express';
 
 import serverAdapter from './config/bullBoardUiConfig';
 import serverConfig from './config/serverConfig';
+import runPython from './containers/runPythonDocker';
 //import sampleQueueProducer from './producers/sampleQueueProducer';
 import apirouter from './routes';
+//import SampleWorker from './workers/SampleWorker';
 
 const app=express();
 const PORT=serverConfig.PORT;
@@ -27,7 +29,22 @@ app.listen(PORT,()=>{
 
     console.log(`BullBoard is running at http://localhost:${PORT}/dashboard`);
     
-    // SampleWorker('SampleQueue');
+    //SampleWorker('SampleQueue');
+    
+    const code =`x = input()
+y = input()
+print("value of x is", x)
+print("value of y is", y)
+`;
+    const inputCase = `100
+    200`;
+    // const code = `
+    //       x = input()
+    //       y = input()
+    //       print("value of x is", x)
+    //       print("value of y is", y)`.trim(); 
+      
+    void runPython(code, inputCase);
 
     // void sampleQueueProducer('Samplejob', {
     //     name: 'Sanket',
@@ -39,5 +56,6 @@ app.listen(PORT,()=>{
     //     company: 'Microsoft',
     //     position: 'SDE 2'
     // },1);
+
     
 });
