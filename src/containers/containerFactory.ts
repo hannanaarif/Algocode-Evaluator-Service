@@ -14,5 +14,4 @@ async function createContainer(imageName:string,cmdExecutible:string[]){
     });
     return container;
 };
-
 export default createContainer;

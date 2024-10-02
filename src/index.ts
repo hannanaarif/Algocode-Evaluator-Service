@@ -2,7 +2,7 @@ import express, { RequestHandler } from 'express';
 
 import serverAdapter from './config/bullBoardUiConfig';
 import serverConfig from './config/serverConfig';
-import runPython from './containers/runPythonDocker';
+import runCPP from './containers/runCPPDocker';
 //import sampleQueueProducer from './producers/sampleQueueProducer';
 import apirouter from './routes';
 //import SampleWorker from './workers/SampleWorker';
@@ -30,22 +30,80 @@ app.listen(PORT,()=>{
     console.log(`BullBoard is running at http://localhost:${PORT}/dashboard`);
     
     //SampleWorker('SampleQueue');
-    
-    const code =`x = input()
-y = input()
-print("value of x is", x)
-print("value of y is", y)
+
+    //CPP
+
+    const userCode = `
+  
+    class Solution {
+      public:
+      vector<int> permute() {
+          vector<int> v;
+          v.push_back(10);
+          return v;
+      }
+    };
+  `;
+
+  const code = `
+  #include<iostream>
+  #include<vector>
+  #include<stdio.h>
+  using namespace std;
+  
+  ${userCode}
+
+  int main() {
+
+    Solution s;
+    vector<int> result = s.permute();
+    for(int x : result) {
+      cout<<x<<" ";
+    }
+    cout<<endl;
+    return 0;
+  }
+  `;
+
+const inputCase = `10
 `;
-    const inputCase = `100
-    200`;
+  
+void runCPP(code, inputCase);
+
+    //java
+
+//     const javaCode = `
+// import java.util.Scanner;
+
+// public class Main {
+//     public static void main(String[] args) {
+//         Scanner scanner = new Scanner(System.in);
+//         String x = scanner.nextLine();
+//         String y = scanner.nextLine();
+//         System.out.println("value of x is " + x);
+//         System.out.println("value of y is " + y);
+//     }
+// }
+// `;
+
+// const inputTestCase = '100\n200\n';
+
+// void runJava(javaCode, inputTestCase);
+
+   //python 
+//     const code =`x = input()
+// y = input()
+// print("value of x is", x)
+// print("value of y is", y)
+// `;
+//     const inputCase = `100
+//     200`;
     // const code = `
     //       x = input()
     //       y = input()
     //       print("value of x is", x)
-    //       print("value of y is", y)`.trim(); 
-      
-    void runPython(code, inputCase);
-
+    //       print("value of y is", y)`.trim();   
+    // void runPython(code, inputCase);
     // void sampleQueueProducer('Samplejob', {
     //     name: 'Sanket',
     //     company: 'Microsoft',
@@ -56,6 +114,4 @@ print("value of y is", y)
     //     company: 'Microsoft',
     //     position: 'SDE 2'
     // },1);
-
-    
 });

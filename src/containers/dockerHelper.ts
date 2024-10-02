@@ -25,6 +25,5 @@ export default function decodeDockerStream(buffer:Buffer):DockerStreamOutput{
 
         offset+=length;
     }
-    console.log('output:-',output);
     return output;
 }
