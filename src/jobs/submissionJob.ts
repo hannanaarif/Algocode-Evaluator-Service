@@ -16,9 +16,6 @@ export default class SubmissionJob implements IJob{
     handle=async(job?:Job)=>{
         if (job) {
             const key = Object.keys(this.payload)[0];
-            console.log(this.payload[key].language);
-            console.log('this.payload[key].code',this.payload[key].code);
-            console.log('this.payload[key].inputCase',this.payload[key].inputCase);
             if (this.payload[key].language === 'CPP') {
                     console.log('about to Evaluated response is',this.payload[key].code,this.payload[key].inputCase);
                     const response = await runCPP(this.payload[key].code, this.payload[key].inputCase);
