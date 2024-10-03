@@ -11,7 +11,7 @@ export default class SampleJob implements IJob{
         this.name=this.constructor.name;
     }
 
-    handle= (job?: Job) =>{
+    handle= (job?: Job):void=>{
        if(job){
         console.log('Handling job that coming from worker');
        }

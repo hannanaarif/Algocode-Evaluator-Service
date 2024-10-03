@@ -2,9 +2,11 @@ import express, { RequestHandler } from 'express';
 
 import serverAdapter from './config/bullBoardUiConfig';
 import serverConfig from './config/serverConfig';
-import runCPP from './containers/runCPPDocker';
-//import sampleQueueProducer from './producers/sampleQueueProducer';
+//import runCPP from './containers/runCPPDocker';
+import submissionQueueProducer from './producers/submissionQueueProducer';
 import apirouter from './routes';
+import { submission_queue } from './utils/constants';
+import SubmissionWorker from './workers/submissionWorker';
 //import SampleWorker from './workers/SampleWorker';
 
 const app=express();
@@ -31,9 +33,13 @@ app.listen(PORT,()=>{
     
     //SampleWorker('SampleQueue');
 
+    SubmissionWorker(submission_queue);
+
+    
+
     //CPP
 
-    const userCode = `
+const userCode = `
   
     class Solution {
       public:
@@ -67,8 +73,15 @@ app.listen(PORT,()=>{
 
 const inputCase = `10
 `;
+
+void submissionQueueProducer({'1234': {
+        language: 'CPP',
+        inputCase,
+        code
+      }});
   
-void runCPP(code, inputCase);
+//void runCPP(code, inputCase);
+
 
     //java
 
