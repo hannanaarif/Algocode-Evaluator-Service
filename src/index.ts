@@ -3,7 +3,7 @@ import express, { RequestHandler } from 'express';
 import serverAdapter from './config/bullBoardUiConfig';
 import serverConfig from './config/serverConfig';
 //import runCPP from './containers/runCPPDocker';
-import submissionQueueProducer from './producers/submissionQueueProducer';
+//import submissionQueueProducer from './producers/submissionQueueProducer';
 import apirouter from './routes';
 import { submission_queue } from './utils/constants';
 import SubmissionWorker from './workers/submissionWorker';
@@ -33,13 +33,13 @@ app.listen(PORT,()=>{
     
     //SampleWorker('SampleQueue');
 
-    SubmissionWorker(submission_queue);
+   SubmissionWorker(submission_queue);
 
     
 
     //CPP
 
-const userCode = `
+/*const userCode = `
   
     class Solution {
       public:
@@ -78,7 +78,7 @@ void submissionQueueProducer({'1234': {
         language: 'CPP',
         inputCase,
         code
-      }});
+      }});*/
   
 //void runCPP(code, inputCase);
 

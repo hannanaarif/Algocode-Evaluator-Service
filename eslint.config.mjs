@@ -21,7 +21,7 @@ export default tseslint.config({
       'simple-import-sort': simpleImportSort, // Register the plugin
     },
     rules:{
-     "semi": ["error", "always"],
+     //"semi": ["error", "always"],
       //"no-console":"error",
        quotes:["error","single",{allowTemplateLiterals:true}],
        'simple-import-sort/imports': 'error', // Enable import sorting rule

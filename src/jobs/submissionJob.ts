@@ -15,14 +15,18 @@ import { ExecutionResponse } from '../types/CodeExecutorStrategy';
             }
 
             handle=async(job?:Job)=>{
+                console.log('Handler was called');
+                console.log(this.payload);
                 if (job) {
                     const key = Object.keys(this.payload)[0];
-                    const codeLanguage=this.payload[key].language;
-                    const code=this.payload.key.code;
-                    const inputTestCases=this.payload.key.inputCase;
+                    const codeLanguage = this.payload[key].language;
+                    const code = this.payload[key].code;
+                    const inputTestCases = this.payload[key].inputCase;
+                    const outputTestCases = this.payload[key].outputCase;
                     const strategy=createExecutor(codeLanguage);
                     if(strategy!==null){
-                        const response:ExecutionResponse=await strategy.execute(code,inputTestCases);
+                        console.log('going to execute the code');
+                        const response:ExecutionResponse=await strategy.execute(code,inputTestCases,outputTestCases);
                         if(response.status=='completed'){   
                             console.log('code executed successfully');
                             console.log(response);

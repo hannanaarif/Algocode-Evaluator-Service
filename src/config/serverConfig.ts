@@ -6,7 +6,7 @@ dotenv.config();
 
 // Export the configuration as a default export
 export default {
-    PORT: process.env.PORT || 3000,
+    PORT: process.env.PORT || 3003,
     REDIS_PORT:parseInt(process.env.REDIS_PORT||'6379', 10),
     REDIS_HOST:process.env.REDIS_HOST||'127.0.0.1'
 };

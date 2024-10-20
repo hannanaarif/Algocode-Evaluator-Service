@@ -5,9 +5,10 @@
 
                     class pythonExceuter implements CodeExecuterStrategy{
 
-                    //async execute(code: string, inputTestCases: string, outputTestcases: string): Promise<ExecutionResponse> {
-                 async execute(code: string, inputTestCases: string): Promise<ExecutionResponse> {
-
+                    async execute(code: string, inputTestCases: string, outputTestcases: string): Promise<ExecutionResponse> {
+                //  async execute(code: string, inputTestCases: string): Promise<ExecutionResponse> {
+                    console.log(code,inputTestCases,outputTestcases);
+                    
                         const rawLogBuffer:Buffer[]=[];
                         const runCommand=`echo '${code.replace(/'/g, `'\\"`)}' > test.py && echo '${inputTestCases.replace(/'/g, `'\\"`)}'|python3 test.py`;
                         const pythonDockerContainer=await createContainer(PYTHON_IMAGE,[
