@@ -33,11 +33,29 @@ class javaExecuter implements CodeExecuterStrategy{
    });
    try {
     const codeResponse=await this.fetchDecodedStream(loggerStream,rawLogBuffer);
-      console.log('output:codeResponse as string',codeResponse as string);
-      return {output:codeResponse as string,status:'completed'};
+    const trimmedResponse:string = (codeResponse as string).trim();
+    if(trimmedResponse===outputTestcases.trim()) {
+        return {output:codeResponse as string,status:'SUCCESS'};
+    }
+    else{
+        return {output:codeResponse as string,status:'WA'};
+    }
    } catch (error) {
-       console.log('error from java executer',error);
-      return {output:error as string,status:'Error'};
+    // console.log('Error message', error.message );
+    // if(error.message === 'TLE') {
+    //     await javaDockerContainer.kill();
+    // }
+    // return {output: error as string, status: 'ERROR'}
+    if (error instanceof Error) {  // Type guard to check if it's an Error
+        console.log('Error message', error.message);
+        if (error.message === 'TLE') {
+          await javaDockerContainer.kill();
+        }
+        return { output: error.message, status: 'ERROR' };
+      } else {
+        // Handle non-Error types
+        return { output: String(error), status: 'ERROR' };
+      }
   }
   finally{
     console.log('Removing image');
@@ -46,12 +64,13 @@ class javaExecuter implements CodeExecuterStrategy{
 }
 fetchDecodedStream(loggerStream:NodeJS.ReadableStream,rawLogBuffer:Buffer[]){
     return new Promise((Resolve,Reject) => {
-        // const timer=setTimeout(()=>{
-        //     console.log('timer called');
-        //     Reject(new Error('TLE'));
-        // },2000);
+        const timer=setTimeout(()=>{
+            console.log('timer called');
+            Reject(new Error('TLE'));
+            },3000);
+
         loggerStream.on('end', () => {
-           // clearTimeout(timer);
+           clearTimeout(timer);
             // Concatenate all collected log chunks into one complete buffer
             const completeStreamData = Buffer.concat(rawLogBuffer);
     
@@ -59,7 +78,7 @@ fetchDecodedStream(loggerStream:NodeJS.ReadableStream,rawLogBuffer:Buffer[]){
             const decodedStream = decodeDockerStream(completeStreamData);
     
             // Log the decoded stream for debugging purposes
-            console.log(decodedStream);
+            //console.log(decodedStream);
     
             // Resolve the promise with the decoded log stream
             if(decodedStream.stderr){

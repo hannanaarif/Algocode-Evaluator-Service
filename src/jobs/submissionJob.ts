@@ -27,7 +27,7 @@ import { ExecutionResponse } from '../types/CodeExecutorStrategy';
                     if(strategy!==null){
                         console.log('going to execute the code');
                         const response:ExecutionResponse=await strategy.execute(code,inputTestCases,outputTestCases);
-                        if(response.status=='completed'){   
+                        if(response.status=='SUCCESS'){   
                             console.log('code executed successfully');
                             console.log(response);
                         }
