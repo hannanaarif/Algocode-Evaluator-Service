@@ -67,7 +67,7 @@ fetchDecodedStream(loggerStream:NodeJS.ReadableStream,rawLogBuffer:Buffer[]){
         const timer=setTimeout(()=>{
             console.log('timer called');
             Reject(new Error('TLE'));
-            },3000);
+            },4000);
 
         loggerStream.on('end', () => {
            clearTimeout(timer);
